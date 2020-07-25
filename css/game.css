@@ -1,0 +1,52 @@
+body {
+	background-color: #FCFCFC;
+	text-align: center;
+}
+
+.tablero {
+	display: inline-block;
+}
+
+.tablero ul {
+	display: flex;
+	flex-direction: row;
+	list-style: none;
+	margin: 0;
+	margin-block-start: 0;
+    margin-block-end: 0;
+    margin-inline-start: 0;
+    margin-inline-end: 0;
+    padding-inline-start: 0;
+}
+
+.tablero li {
+	display: list-item;
+	width: 16px;
+	height: 16px;
+	flex-basis: 0 1 16px;
+	box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+}
+
+.tablero li:hover {
+	border: #FFF 1px solid;
+}
+
+/*******************************/
+
+.vacio {
+	background-color: #222;
+}
+
+.pasto {
+	background-color: #080;
+}
+
+.tierra {
+	background-color: #696813;
+}
+
+.agua {
+	background-color: #00B;
+}
