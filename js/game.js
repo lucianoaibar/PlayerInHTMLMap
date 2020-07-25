@@ -3,74 +3,115 @@
 
 	//_________________________________________________________________________
 	// Variables
-	var div_mapa;
-	var	Ancho = 32;
-	var Alto = 32;
-	var Mapa = [];
+	var div_view;
+	var	Width = 32;
+	var Heigth = 32;
+	var Map = [];
 
-	var Celda_Tipos = [
+	var CellTypes = [
 		'vacio',
 		'pasto',
 		'tierra',
 		'agua'
 	];
 
-	var Celda_Tipo_Max;
+	var MaxCellType;
+	var player;
 
 	//_________________________________________________________________________
-	var Iniciar = function() {
-		div_mapa = document.getElementById('div_mapa');
-		div_mapa.addEventListener('click', Mapa_Click);
-		Cargar_Mapa();
+	var Main = function() {
+		div_view = document.getElementById('div_view');
+		div_view.addEventListener('click', Map_Click);
+		
+		player = new Player();
+
+		keyboardJS.bind('w', null, OnKeyW);
+		keyboardJS.bind('a', null, OnKeyA);
+		keyboardJS.bind('s', null, OnKeyS);
+		keyboardJS.bind('d', null, OnKeyD);
+
+		Load_Map();
 		Render();
 	};
 
 	//_________________________________________________________________________
-	var Cargar_Mapa = function() {
-		Celda_Tipo_Max = Celda_Tipos.length - 1;
-		Mapa.length = Ancho * Alto;
-		Mapa.fill(0);
+	var Load_Map = function() {
+		MaxCellType = CellTypes.length - 1;
+		Map.length = Width * Heigth;
+		Map.fill(0);
 	};
 
 	//_________________________________________________________________________
 	var Render = function() {
 
-		var indice;
+		var idx;
 		var	x, y;
-		var	resultado;
+		var	result;
 		var	indice_tipo;
+		var	player_in_map_idx;
 
-		indice = 0;
-		resultado = '';
-		for(y=0;y<Alto;y++) {
-			resultado += '<ul>';
-			for(x=0;x<Ancho;x++) {
+		player_in_map_idx = Width * player.y + player.x;
+		
+		idx = 0;
+		result = '';
+		for(y=0;y<Heigth;y++) {
+			result += '<ul>';
+			for(x=0;x<Width;x++) {
 
-				indice_tipo = Mapa[indice];
+				indice_tipo = Map[idx];
 
-				resultado +=
-					'<li indice="' + indice + '" class="' + Celda_Tipos[indice_tipo] + '"></li>';
+				result += '<li mapidx="' + idx + '" class="' + CellTypes[indice_tipo];
+				if(idx==player_in_map_idx) {
+					result += ' player';
+				}
+				result += '"></li>';
 
-				indice++;
+				idx++;
 			}
-			resultado += '</ul>';
+			result += '</ul>';
 		}
-		div_mapa.innerHTML = resultado;
+		div_view.innerHTML = result;
 	};
 
 	//_________________________________________________________________________
-	var Mapa_Click = function(evento) {
-		if(evento.target.tagName=='LI') {
-			var indice	= parseInt(evento.target.getAttribute('indice'));
+	var Map_Click = function(e) {
+		if(e.target.tagName=='LI') {
+			var mapidx	= parseInt(e.target.getAttribute('mapidx'));
 
-			var tipo = Mapa[indice];
-			//Mapa[indice] = tipo==Celda_Tipo_Max ? 0 : ++tipo;
+			var celltype = Map[mapidx];
+			Map[mapidx] = celltype==MaxCellType ? 0 : ++celltype;
 
 			Render();
 		}
 	};
 
 	//_________________________________________________________________________
-	Iniciar();
+	var OnKeyW = function() {
+		if(player.y>0) player.y--;
+		Render();
+	}
+	var OnKeyA = function() {
+		if(player.x>0) player.x--;
+		Render();
+	}
+	var OnKeyS = function() {
+		if(player.y<(Heigth-1)) player.y++;
+		Render();
+	}
+	var OnKeyD = function() {
+		if(player.x<(Width-1)) player.x++;
+		Render();
+	}
+
+	//_________________________________________________________________________
+	class Player {
+		constructor() {
+			this.x = 10;
+			this.y = 10;
+		}
+	}
+
+	//_________________________________________________________________________
+	Main();
 
 })();

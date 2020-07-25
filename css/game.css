@@ -3,11 +3,11 @@ body {
 	text-align: center;
 }
 
-.tablero {
+.view {
 	display: inline-block;
 }
 
-.tablero ul {
+.view ul {
 	display: flex;
 	flex-direction: row;
 	list-style: none;
@@ -19,7 +19,7 @@ body {
     padding-inline-start: 0;
 }
 
-.tablero li {
+.view li {
 	display: list-item;
 	width: 16px;
 	height: 16px;
@@ -29,7 +29,7 @@ body {
     -webkit-box-sizing: border-box;
 }
 
-.tablero li:hover {
+.view li:hover {
 	border: #FFF 1px solid;
 }
 
@@ -49,4 +49,8 @@ body {
 
 .agua {
 	background-color: #00B;
+}
+
+.player {
+	background-image: url('../assets/player.png');
 }
