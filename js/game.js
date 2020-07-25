@@ -15,7 +15,7 @@
 		'agua'
 	];
 
-	var MaxCellType;
+	var CurrentCellType;
 	var player;
 
 	//_________________________________________________________________________
@@ -24,6 +24,13 @@
 		div_view.addEventListener('click', Map_Click);
 		
 		player = new Player();
+
+		CurrentCellType = 0;
+
+		keyboardJS.bind('1', null, OnCellType1);
+		keyboardJS.bind('2', null, OnCellType2);
+		keyboardJS.bind('3', null, OnCellType3);
+		keyboardJS.bind('4', null, OnCellType4);
 
 		keyboardJS.bind('w', null, OnKeyW);
 		keyboardJS.bind('a', null, OnKeyA);
@@ -36,7 +43,6 @@
 
 	//_________________________________________________________________________
 	var Load_Map = function() {
-		MaxCellType = CellTypes.length - 1;
 		Map.length = Width * Heigth;
 		Map.fill(0);
 	};
@@ -77,12 +83,23 @@
 	var Map_Click = function(e) {
 		if(e.target.tagName=='LI') {
 			var mapidx	= parseInt(e.target.getAttribute('mapidx'));
-
-			var celltype = Map[mapidx];
-			Map[mapidx] = celltype==MaxCellType ? 0 : ++celltype;
-
+			Map[mapidx] = CurrentCellType;
 			Render();
 		}
+	};
+
+	//_________________________________________________________________________
+	var OnCellType1 = function() {
+		CurrentCellType = 0;
+	};
+	var OnCellType2 = function() {
+		CurrentCellType = 1;
+	};
+	var OnCellType3 = function() {
+		CurrentCellType = 2;
+	};
+	var OnCellType4 = function() {
+		CurrentCellType = 3;
 	};
 
 	//_________________________________________________________________________
