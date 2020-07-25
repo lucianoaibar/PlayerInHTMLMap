@@ -9,3 +9,5 @@ Press 1234 keys to select current terrain floor type.
 Click on the map to paint the selected current terrain floor type.
 
 Use the Download button to save the editted map.
+
+![image](/readme/image1.png)
