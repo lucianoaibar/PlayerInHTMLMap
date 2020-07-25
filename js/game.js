@@ -3,10 +3,10 @@
 
 	//_________________________________________________________________________
 	// Variables
-	var div_view;
+	var	div_view;
+	var	btn_download_map;
 	var	Width = 32;
 	var Heigth = 32;
-	var Map = [];
 
 	var CellTypes = [
 		'vacio',
@@ -22,10 +22,13 @@
 	var Main = function() {
 		div_view = document.getElementById('div_view');
 		div_view.addEventListener('click', Map_Click);
+
+		btn_download_map = document.getElementById('btn_download_map');
+		btn_download_map.addEventListener('click', Download_Map);
 		
 		player = new Player();
 
-		CurrentCellType = 0;
+		CurrentCellType = 1;
 
 		keyboardJS.bind('1', null, OnCellType1);
 		keyboardJS.bind('2', null, OnCellType2);
@@ -37,14 +40,7 @@
 		keyboardJS.bind('s', null, OnKeyS);
 		keyboardJS.bind('d', null, OnKeyD);
 
-		Load_Map();
 		Render();
-	};
-
-	//_________________________________________________________________________
-	var Load_Map = function() {
-		Map.length = Width * Heigth;
-		Map.fill(0);
 	};
 
 	//_________________________________________________________________________
@@ -64,7 +60,7 @@
 			result += '<ul>';
 			for(x=0;x<Width;x++) {
 
-				indice_tipo = Map[idx];
+				indice_tipo = MAP_TERRAIN[idx];
 
 				result += '<li mapidx="' + idx + '" class="' + CellTypes[indice_tipo];
 				if(idx==player_in_map_idx) {
@@ -83,7 +79,7 @@
 	var Map_Click = function(e) {
 		if(e.target.tagName=='LI') {
 			var mapidx	= parseInt(e.target.getAttribute('mapidx'));
-			Map[mapidx] = CurrentCellType;
+			MAP_TERRAIN[mapidx] = CurrentCellType;
 			Render();
 		}
 	};
@@ -127,6 +123,12 @@
 			this.y = 10;
 		}
 	}
+
+	//_________________________________________________________________________
+	var Download_Map = function() {
+		var mapa_data = 'var MAP_TERRAIN=' + JSON.stringify(MAP_TERRAIN);
+		download(mapa_data, 'map.js', 'text/plain');
+	};
 
 	//_________________________________________________________________________
 	Main();
